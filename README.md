@@ -39,3 +39,18 @@ After setting these parameters, the simulation will start. As the user you have 
 1. '' --> Simply pressing ENTER will pass empty line and the simulation will go the next step
 2. 'current_floor,destination_floor' --> these input (both values must be integers) will create pick up request. Example --> '3,7'
 3. 'stop' --> Passing these will stop the simulation (by finishing the process with exit code 0)
+
+You will be asked to pass the input after every single step (there will be no messages asking you to provide it in order to make the output clear).
+
+Also after every step the simulation will output status of all elevators:
+Example --> '[[[10], [3], [6]]]', where 10 is ID of the elevator, 3 is current floor and [6] is the request ArrayList, where there is only one request to stop at the floor 6.
+
+Another status example:
+[[[1], [7], [7, 3]], [[2], [10]], [[3], [6], [2, 5], [8, 4]]]
+
+There are 3 elevators in this example:
+1. is at floor number 7, with pickup request [7,3] -> 3 is pickup and 7 is the destination
+2. is at floor number 10, and has no requests
+3. is at floor 6 and has 2 requests
+
+
