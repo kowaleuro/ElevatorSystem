@@ -2,19 +2,18 @@ import java.util.*;
 
 public class SystemOfElevators implements ElevatorSystem {
 
-    protected int noOfFloor;
-    protected int noOfElevators;
-    protected ArrayList<Elevator> ElevatorList;
-    protected ArrayList<ArrayList<Integer>> temp;
+    private int noOfFloor;
+    private int noOfElevators;
+    private ArrayList<Elevator> elevatorList;
+    private ArrayList<ArrayList<Integer>> temp;
 
     public SystemOfElevators(int noOfFloors, int noOfElevators) {
         this.noOfFloor = noOfFloors;
         this.noOfElevators = noOfElevators;
-
-        ElevatorList = new ArrayList<>();
+        elevatorList = new ArrayList<>();
         Random rand = new Random();
         for (int i = 1; i <= noOfElevators; i++) {
-            ElevatorList.add(new Elevator(i, rand.nextInt(this.noOfFloor) + 1));
+            elevatorList.add(new Elevator(i, rand.nextInt(this.noOfFloor) + 1));
         }
         temp = new ArrayList<>();
     }
@@ -22,8 +21,6 @@ public class SystemOfElevators implements ElevatorSystem {
     @Override
     public void pickup(int currentFloor, int destFloor) {
         boolean isUp = currentFloor < destFloor;
-        //temp
-
         if (validateFloors(currentFloor, destFloor)) {
             if (currentFloor != destFloor) {
                 Elevator elevator = findClosestElevator(currentFloor, isUp);
@@ -49,7 +46,7 @@ public class SystemOfElevators implements ElevatorSystem {
     @Override
     public void update() {
 
-        for (Elevator elevator : ElevatorList) {
+        for (Elevator elevator : elevatorList) {
             if (!elevator.getFlorPairList().isEmpty()) {
                 moveElevator(elevator);
                 stopElevator(elevator);
@@ -60,16 +57,14 @@ public class SystemOfElevators implements ElevatorSystem {
 
     @Override
     public void step() {
-
         update();
         status();
-
     }
 
     @Override
     public void status() {
         ArrayList<ArrayList<ArrayList<Integer>>> statusList = new ArrayList<>();
-        for (Elevator elevator : ElevatorList) {
+        for (Elevator elevator : elevatorList) {
             ArrayList<ArrayList<Integer>> elevatorList = new ArrayList<>();
             elevatorList.add(new ArrayList<>(List.of(elevator.getId())));
             elevatorList.add(new ArrayList<>(List.of(elevator.getCurrentFloor())));
@@ -93,29 +88,27 @@ public class SystemOfElevators implements ElevatorSystem {
         int elevatorNo = 0;
         int distance;
         for (int i = 0; i < noOfElevators; i++) {
-            distance = currentFloor - ElevatorList.get(i).getCurrentFloor();
-
-            if (!ElevatorList.get(i).getFlorPairList().isEmpty()) {
+            distance = currentFloor - elevatorList.get(i).getCurrentFloor();
+            if (!elevatorList.get(i).getFlorPairList().isEmpty()) {
                 if (distance < 0) {
-                    if (ElevatorList.get(i).isUp()) {
-                        distance = 2 * noOfFloor - currentFloor - ElevatorList.get(i).getCurrentFloor();
+                    if (elevatorList.get(i).isUp()) {
+                        distance = 2 * noOfFloor - currentFloor - elevatorList.get(i).getCurrentFloor();
                     }
                 } else if (distance > 0) {
-                    if (!ElevatorList.get(i).isUp()) {
-                        distance = ElevatorList.get(i).getCurrentFloor() - 1 + currentFloor;
+                    if (!elevatorList.get(i).isUp()) {
+                        distance = elevatorList.get(i).getCurrentFloor() - 1 + currentFloor;
                     }
                 }
             }
-
             distance = Math.abs(distance);
             if (distance < min) {
                 min = distance;
                 elevatorNo = i;
-            } else if (distance == min && ElevatorList.get(i).isUp() == isUp) {
+            } else if (distance == min && elevatorList.get(i).isUp() == isUp) {
                 elevatorNo = i;
             }
         }
-        return ElevatorList.get(elevatorNo);
+        return elevatorList.get(elevatorNo);
 
     }
 
@@ -167,7 +160,6 @@ public class SystemOfElevators implements ElevatorSystem {
                 }
             }
         }
-
         if (open) {
             System.out.printf("Elevator: %03d stopped at floor: %03d%n \n", elevator.getId(), elevator.getCurrentFloor());
         }
@@ -208,4 +200,35 @@ public class SystemOfElevators implements ElevatorSystem {
         }
     }
 
+    public int getNoOfFloor() {
+        return noOfFloor;
+    }
+
+    public void setNoOfFloor(int noOfFloor) {
+        this.noOfFloor = noOfFloor;
+    }
+
+    public int getNoOfElevators() {
+        return noOfElevators;
+    }
+
+    public void setNoOfElevators(int noOfElevators) {
+        this.noOfElevators = noOfElevators;
+    }
+
+    public ArrayList<Elevator> getElevatorList() {
+        return elevatorList;
+    }
+
+    public void setElevatorList(ArrayList<Elevator> elevatorList) {
+        this.elevatorList = elevatorList;
+    }
+
+    public ArrayList<ArrayList<Integer>> getTemp() {
+        return temp;
+    }
+
+    public void setTemp(ArrayList<ArrayList<Integer>> temp) {
+        this.temp = temp;
+    }
 }
