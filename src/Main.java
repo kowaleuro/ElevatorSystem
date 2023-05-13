@@ -7,7 +7,7 @@ public class Main {
         int noOfFloors = in.nextInt();
         System.out.println("Please input number of elevators in simulation:");
         int noOfElevators = in.nextInt();
-        SystemOfElevators system = new SystemOfElevators(noOfFloors,noOfElevators);
+        SystemOfElevators system = new SystemOfElevators(noOfFloors, noOfElevators);
         system.start();
     }
 }

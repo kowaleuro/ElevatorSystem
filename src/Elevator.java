@@ -1,10 +1,16 @@
 import java.util.ArrayList;
 
 public class Elevator {
-    public int id;
-    public int currentFloor;
-    public boolean up;
-    public ArrayList<ArrayList<Integer>> florPairList;
+    private int id;
+    private int currentFloor;
+    private boolean up;
+    private ArrayList<ArrayList<Integer>> florPairList;
+
+    public Elevator(int id, int currentFloor) {
+        setFlorPairList(new ArrayList<>());
+        setId(id);
+        setCurrentFloor(currentFloor);
+    }
 
     public ArrayList<ArrayList<Integer>> getFlorPairList() {
         return florPairList;
@@ -12,12 +18,6 @@ public class Elevator {
 
     public void setFlorPairList(ArrayList<ArrayList<Integer>> florPairList) {
         this.florPairList = florPairList;
-    }
-
-    public Elevator(int id, int currentFloor) {
-        setFlorPairList(new ArrayList<>());
-        setId(id);
-        setCurrentFloor(currentFloor);
     }
 
     public int getId() {
